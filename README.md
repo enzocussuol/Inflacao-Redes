@@ -4,3 +4,4 @@
 - [ ] Definir as estruturas.
 - [ ] Dividir os trabalhos.
 - [ ] Testar.
+- [x] trabalho pronto.
