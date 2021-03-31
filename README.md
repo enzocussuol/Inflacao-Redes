@@ -25,4 +25,10 @@
 4. lista
 5. main
 
-## Ordem
+## Para fins de testes
+
+A funcao imprimeGrafo() gera um arquivo grafo.dot. Para transformar esse arquivo em .png, basta rodar o comando no terminal (depois de ter executado o programa):
+
+dot grafo.dot -Tpng -o nome.png
+
+Esse arquivo .png estara na mesma pasta e ira fornecer uma visao grafica do grafo.

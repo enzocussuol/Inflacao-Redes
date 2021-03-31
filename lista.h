@@ -2,12 +2,16 @@
 #ifndef _LISTA_
 	#define _LISTA_
 
+	#include "vertice.h"
+
 	typedef struct tLista Lista;
 
 	Lista* lista_cria ();
 
 	/*Talvez fazer uma insere diferente, para inserir struct*/
-	void lista_insere (Lista* l, int noDestino, double peso);
+	int lista_vazia (Lista* l);
+	void lista_insere (Lista* l, Vertice* vertice);
+	Vertice* lista_retornaVertice (Lista* l, int pos);
 	void lista_imprime (Lista* l);
 	void lista_libera (Lista* l);
 

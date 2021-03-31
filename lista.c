@@ -2,21 +2,17 @@
 #include <stdlib.h>
 #include "lista.h"
 
-
 typedef struct tCelula Celula;
 
 struct tCelula{
 	Celula* prox;
-	int noDestino;
-	double peso;
+	Vertice* vertice;
 };
-
 
 struct tLista{
 	Celula* prim;
 	Celula* ult;
 };
-
 
 Lista* lista_cria (){
 	Lista* nova = (Lista*) malloc (sizeof (Lista));
@@ -24,7 +20,6 @@ Lista* lista_cria (){
 
 	return nova;
 }
-
 
 int lista_vazia (Lista* l){
 	if (!l->prim && !l->ult){
@@ -34,12 +29,11 @@ int lista_vazia (Lista* l){
 }
 
 //Insere no final
-void lista_insere (Lista* l , int noDestino, double peso){
+void lista_insere (Lista* l , Vertice* vertice){
 
 	Celula* nova = (Celula*) malloc (sizeof (Celula));
 	nova->prox = NULL;
-	nova->peso = peso;
-	nova->noDestino = noDestino;
+	nova->vertice = vertice;
 
 	if (lista_vazia (l)){
 		l->prim = l->ult = nova;
@@ -49,18 +43,30 @@ void lista_insere (Lista* l , int noDestino, double peso){
 
 }
 
+Vertice* lista_retornaVertice (Lista* l, int pos){
+	Celula* celAux = l->prim;
+
+	for(int i = 0; i < pos; i++){
+		celAux = celAux->prox;
+	}
+
+	if(celAux != NULL){
+		return celAux->vertice;
+	}else{
+		return NULL;
+	}
+}
 
 void lista_imprime (Lista* l){
 
 	Celula* p = l->prim;
 
 	while (p){
-		printf ("Node: %d, Peso: %f\n", p->noDestino, p->peso);
+		imprimeVertice(p->vertice);
 		p = p->prox;
 	}
 
 }
-
 
 void lista_libera (Lista* l){
 
@@ -69,6 +75,7 @@ void lista_libera (Lista* l){
 
 	while (p){
 		q = p->prox;
+		liberaVertice(p->vertice);
 		free (p);
 		p = q;
 	}
