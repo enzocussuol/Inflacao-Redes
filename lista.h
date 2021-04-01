@@ -4,7 +4,7 @@
 
 	#include "vertice.h"
 
-	typedef struct tLista Lista;
+	typedef struct lista Lista;
 
 	Lista* lista_cria ();
 

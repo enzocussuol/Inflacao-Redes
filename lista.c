@@ -2,14 +2,14 @@
 #include <stdlib.h>
 #include "lista.h"
 
-typedef struct tCelula Celula;
+typedef struct celula Celula;
 
-struct tCelula{
+struct celula{
 	Celula* prox;
 	Vertice* vertice;
 };
 
-struct tLista{
+struct lista{
 	Celula* prim;
 	Celula* ult;
 };

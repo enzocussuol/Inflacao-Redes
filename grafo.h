@@ -5,7 +5,7 @@
 
     typedef struct grafo Grafo;
 
-    Grafo* criaGrafo(int, int[], int[], int[], int, int, int);
+    Grafo* criaGrafo(int, int, int[], int[], int[], int, int, int);
     void insereAresta(Grafo*, int, Vertice*);
     void dijkstra(Grafo*);
     int retornaNumVertices(Grafo*);

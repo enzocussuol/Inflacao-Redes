@@ -1,48 +1,45 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "vertice.h"
 #include "lista.h"
 #include "grafo.h"
 
-int main(){
-    /*
-    Teste das funcoes implementadas ate aqui:
-    
-    Vertice* v1 = criaVertice(1, 10.0);
-    Vertice* v2 = criaVertice(3, 5.0);
-    Vertice* v3 = criaVertice(3, 2.0);
-    Vertice* v4 = criaVertice(1, 3.0);
-    Vertice* v5 = criaVertice(2, 1.0);
-    Vertice* v6 = criaVertice(2, 3.0);
-    Vertice* v7 = criaVertice(4, 4.0);
-    Vertice* v8 = criaVertice(2, 6.0);
-    Vertice* v9 = criaVertice(0, 7.0);
+Grafo* entrada(char* arquivo){
+    FILE* arq = fopen(arquivo,"r");
+    if(!arq){
+        printf("Erro ao abrir arquivo!");
+        exit(1);
+    }
+    int nVert,nArestas,nServ,nCli,nMonit;
+    int *servidores,*clientes,*monitores;
+    //Leitura das quantidades
+    fscanf(arq,"%d%d",&nVert,&nArestas);        //Quant vertices e arestas
+    fscanf(arq,"%d%d%d",&nServ,&nCli,&nMonit);   //Quant servidores,clientes e monitores
+    //Alocando memória
+    servidores = malloc(sizeof(int) * nServ);
+    clientes = malloc(sizeof(int) * nCli);
+    monitores = malloc(sizeof(int) * nMonit);
+    //Leitura dos nós
+    for(int i = 0 ; i < nServ; i++)//Leitura dos nós que indicam servidores
+        fscanf(arq,"%d",&servidores[i]);
+    for(int i = 0; i < nCli; i++)//Leitura dos nós que indicam clientes
+        fscanf(arq,"%d",&clientes[i]);
+    for(int i = 0; i < nMonit; i++)//Leitura dos nós que indicam monitores
+        fscanf(arq,"%d",&monitores[i]);
+    Grafo* rede = criaGrafo(nVert,nArestas,servidores,clientes,monitores,nServ,nCli,nMonit);
+    //Leitura das arestas
+    int origem, destino; double peso;
+    for(int i = 0 ; i < nArestas; i++){
+        fscanf(arq,"%d%d%lf",&origem,&destino,&peso);
+        Vertice* v = criaVertice(destino,peso); //cria vertice destino
+        insereAresta(rede,origem,v);           //insere vertice destino na lista do vertice de origem
+    }
+    return rede;
+}
 
-    int numVertices = 5;
-    
-    int qtdServidores = 1;
-    int qtdClientes = 1;
-    int qtdMonitores = 2;
-
-    int servidores[1] = {0};
-    int clientes[1] = {4};
-    int monitores[2] = {1, 2};
-
-    Grafo* grafo = criaGrafo(numVertices, servidores, clientes, monitores, qtdServidores, qtdClientes, qtdMonitores);
-
-    insereAresta(grafo, 0, v1);
-    insereAresta(grafo, 0, v2);
-    insereAresta(grafo, 1, v3);
-    insereAresta(grafo, 3, v4);
-    insereAresta(grafo, 1, v5);
-    insereAresta(grafo, 3, v6);
-    insereAresta(grafo, 2, v7);
-    insereAresta(grafo, 4, v8);
-    insereAresta(grafo, 4, v9);
-
-    imprimeGrafo(grafo);
-
-    liberaGrafo(grafo);
-    */
-
+int main(int argc, char* argv[]){
+    Grafo* rede = entrada(argv[1]);
+    imprimeGrafo(rede);
+    liberaGrafo(rede);
     return 0;
 }

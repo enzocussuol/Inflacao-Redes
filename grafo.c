@@ -11,11 +11,11 @@ struct grafo{
     Lista** listaAdj;
 };
 
-Grafo* criaGrafo(int numVertices, int servidores[], int clientes[], int monitores[], int qtdServidores, int qtdClientes, int qtdMonitores){
+Grafo* criaGrafo(int numVertices, int numArestas, int servidores[], int clientes[], int monitores[], int qtdServidores, int qtdClientes, int qtdMonitores){
     Grafo* novoGrafo = (Grafo*) malloc(sizeof(Grafo));
 
     novoGrafo->numVertices = numVertices;
-    novoGrafo->numArestas = 0;
+    novoGrafo->numArestas = numArestas;
 
     novoGrafo->servidores = servidores;
     novoGrafo->clientes = clientes;
@@ -36,7 +36,6 @@ Grafo* criaGrafo(int numVertices, int servidores[], int clientes[], int monitore
 
 void insereAresta(Grafo* grafo, int origem, Vertice* destino){
     lista_insere(grafo->listaAdj[origem], destino);
-    grafo->numArestas++;
 }
 
 void dijkstra(Grafo* grafo){
