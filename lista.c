@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include "lista.h"
 
-typedef struct celula Celula;
-
 struct celula{
 	Celula* prox;
 	Vertice* vertice;
@@ -81,4 +79,16 @@ void lista_libera (Lista* l){
 	}
 	
 	free (l);
+}
+
+Celula* retornaCelulaPrim(Lista* l){
+	return l->prim;
+}
+
+Celula* retornaCelulaProx(Celula* c){
+	return c->prox;
+}
+
+Vertice* retornaVerticeDaCelula(Celula* c){
+	return c->vertice;
 }

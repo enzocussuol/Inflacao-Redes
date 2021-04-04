@@ -3,6 +3,7 @@
 #include "vertice.h"
 #include "lista.h"
 #include "grafo.h"
+#include "fila.h"
 
 Grafo* entrada(char* arquivo){
     FILE* arq = fopen(arquivo,"r");
@@ -26,6 +27,7 @@ Grafo* entrada(char* arquivo){
         fscanf(arq,"%d",&clientes[i]);
     for(int i = 0; i < nMonit; i++)//Leitura dos nós que indicam monitores
         fscanf(arq,"%d",&monitores[i]);
+    //criacao do grafo
     Grafo* rede = criaGrafo(nVert,nArestas,servidores,clientes,monitores,nServ,nCli,nMonit);
     //Leitura das arestas
     int origem, destino; double peso;
@@ -39,7 +41,16 @@ Grafo* entrada(char* arquivo){
 
 int main(int argc, char* argv[]){
     Grafo* rede = entrada(argv[1]);
-    imprimeGrafo(rede);
+    //Teste heap
+    Fila* heap = fp_cria(retornaNumArestas(rede));
+    Lista** vertices = retornaListaAdj(rede);
+    for(int i = 0; i < retornaNumVertices(rede); i++){
+        for(Celula* v = retornaCelulaPrim(vertices[i]); v != NULL; v = retornaCelulaProx(v)){
+            fp_insere(heap,retornaVerticeDaCelula(v));
+        }
+    }
+    fp_imprime(heap);
+    //
     liberaGrafo(rede);
     return 0;
 }

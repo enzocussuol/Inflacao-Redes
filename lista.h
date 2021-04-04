@@ -5,6 +5,7 @@
 	#include "vertice.h"
 
 	typedef struct lista Lista;
+	typedef struct celula Celula;
 
 	Lista* lista_cria ();
 
@@ -14,5 +15,9 @@
 	Vertice* lista_retornaVertice (Lista* l, int pos);
 	void lista_imprime (Lista* l);
 	void lista_libera (Lista* l);
+	Celula* retornaCelulaPrim(Lista* l);
+	Celula* retornaCelulaProx(Celula* c);
+	Vertice* retornaVerticeDaCelula(Celula* c);
+
 
 #endif
