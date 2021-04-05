@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 #include "grafo.h"
 
 struct grafo{
@@ -8,7 +9,7 @@ struct grafo{
     int* clientes;
     int* monitores;
     int qtdServidores, qtdClientes, qtdMonitores;
-    Lista** listaAdj;
+    Vertice** vertices;
 };
 
 Grafo* criaGrafo(int numVertices, int numArestas, int servidores[], int clientes[], int monitores[], int qtdServidores, int qtdClientes, int qtdMonitores){
@@ -25,21 +26,65 @@ Grafo* criaGrafo(int numVertices, int numArestas, int servidores[], int clientes
     novoGrafo->qtdClientes = qtdClientes;
     novoGrafo->qtdMonitores = qtdMonitores;
 
-    novoGrafo->listaAdj = (Lista**) malloc(sizeof(Lista*)*novoGrafo->numVertices);
+    novoGrafo->vertices = (Vertice**) malloc(sizeof(Vertice*)*novoGrafo->numVertices);
 
     for(int i = 0; i < novoGrafo->numVertices; i++){
-        novoGrafo->listaAdj[i] = lista_cria();
+        novoGrafo->vertices[i] = criaVertice(i);
     }
 
     return novoGrafo;
 }
 
-void insereAresta(Grafo* grafo, int origem, Vertice* destino){
-    lista_insere(grafo->listaAdj[origem], destino);
+const void inicializaDijkstra(Grafo* grafo, int inicio){
+    for(int i = 0; i < grafo->numVertices; i++){
+        atualizaDistancia(grafo->vertices[i], INT_MAX);
+    }
+
+    atualizaDistancia(grafo->vertices[inicio], 0);
 }
 
-void dijkstra(Grafo* grafo){
-    // A fazer
+double dijkstra(Grafo* grafo, int inicio, int fim){
+    /*
+    inicializaDijkstra(grafo, inicio);
+
+    double custo = 0;
+    int j = 0;
+    
+    Vertice* u;
+    Vertice* v;
+    Aresta* aresta;
+
+    Fila* fp = fp_cria(grafo->numVertices);
+
+    for(int i = 0; i < grafo->numVertices; i++){
+        fp_insere(fp, grafo->vertices[i]);
+    }
+
+    while(!fp_vazia){
+        u = fp_delMin(fp);
+        if(retornaId(u) == fim) break;
+
+        aresta = lista_retornaAresta(retornaListaAdj(u), j);
+        while(aresta != NULL){
+            v = grafo->vertices[retornaDestino(aresta)];
+            if(retornaDistancia(v) > retornaDistancia(u) + retornaPeso(aresta)){
+                // Atualiza a distancia de v
+                // Troca ele de posicao na fila (vai ter uma prioridade maior)
+            }
+
+            j++;
+            aresta = lista_retornaAresta(retornaListaAdj(u), j);
+        }
+
+        j = 0;
+    }
+
+    return custo;
+    */
+}
+
+void insereAresta(Grafo* grafo, Aresta* aresta){
+    lista_insere(retornaListaAdj(grafo->vertices[retornaOrigem(aresta)]), aresta);
 }
 
 int retornaNumVertices(Grafo* grafo){
@@ -74,8 +119,8 @@ int retornaQtdMonitores(Grafo* grafo){
     return grafo->qtdMonitores;
 }
 
-Lista** retornaListaAdj(Grafo* grafo){
-    return grafo->listaAdj;
+Vertice** retornaVertices(Grafo* grafo){
+    return grafo->vertices;
 }
 
 void imprimeGrafo(Grafo* grafo){
@@ -84,32 +129,35 @@ void imprimeGrafo(Grafo* grafo){
     fprintf(f, "digraph{\n");
 
     Vertice* vertice;
+    Aresta* aresta;
     int j = 0;
 
     for(int i = 0; i < grafo->numVertices; i++){
-        if(!lista_vazia(grafo->listaAdj[i])){
-            vertice = lista_retornaVertice(grafo->listaAdj[i], j);
-            while(vertice != NULL){
-                fprintf(f, "%d -> %d[label=\"%.01lf\"];\n", i, retornaId(vertice), retornaPeso(vertice));
-                j++;
-                vertice = lista_retornaVertice(grafo->listaAdj[i], j);
-            }
-        }else{
+        vertice = grafo->vertices[i];
+
+        if(lista_vazia(retornaListaAdj(vertice))){
             fprintf(f, "%d;\n", i);
+        }else{
+            aresta = lista_retornaAresta(retornaListaAdj(vertice), j);
+            while(aresta != NULL){
+                fprintf(f, "%d -> %d[label=\"%.01lf\"];\n", i, retornaDestino(aresta), retornaPeso(aresta));
+                j++;
+                aresta = lista_retornaAresta(retornaListaAdj(vertice), j);
+            }
         }
+
         j = 0;
     }
 
     fprintf(f, "}\n");
-
     fclose(f);
 }
 
 void liberaGrafo(Grafo* grafo){
     for(int i = 0; i < grafo->numVertices; i++){
-        lista_libera(grafo->listaAdj[i]);
+        liberaVertice(grafo->vertices[i]);
     }
 
-    free(grafo->listaAdj);
+    free(grafo->vertices);
     free(grafo);
 }

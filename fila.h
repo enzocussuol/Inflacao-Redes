@@ -1,6 +1,8 @@
+/*
 //Fila de Prioridade //Heap binaria
 #ifndef FILA_H 
     #define FILA_H
+
     #include "vertice.h"
     
     #define item(A) (A)
@@ -19,6 +21,5 @@
     void fix_up(Vertice**,int);
     void fix_down(Vertice**,int,int);
     void fp_imprime(Fila*);
-
-
 #endif
+*/

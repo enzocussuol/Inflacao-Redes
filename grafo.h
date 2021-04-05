@@ -1,13 +1,14 @@
 #ifndef GRAFO_H
     #define GRAFO_h
 
-    #include "lista.h"
+    #include "vertice.h"
+    #include "fila.h"
 
     typedef struct grafo Grafo;
 
     Grafo* criaGrafo(int, int, int[], int[], int[], int, int, int);
-    void insereAresta(Grafo*, int, Vertice*);
-    void dijkstra(Grafo*);
+    double dijkstra(Grafo*, int, int);
+    void insereAresta(Grafo*, Aresta*);
     int retornaNumVertices(Grafo*);
     int retornaNumArestas(Grafo*);
     int* retornaServidores(Grafo*);
@@ -16,7 +17,7 @@
     int retornaQtdServidores(Grafo*);
     int retornaQtdClientes(Grafo*);
     int retornaQtdMonitores(Grafo*);
-    Lista** retornaListaAdj(Grafo*);
+    Vertice** retornaVertices(Grafo*);
     void imprimeGrafo(Grafo*);
     void liberaGrafo(Grafo*);
 #endif

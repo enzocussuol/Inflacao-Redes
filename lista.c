@@ -4,7 +4,7 @@
 
 struct celula{
 	Celula* prox;
-	Vertice* vertice;
+	Aresta* aresta;
 };
 
 struct lista{
@@ -27,21 +27,19 @@ int lista_vazia (Lista* l){
 }
 
 //Insere no final
-void lista_insere (Lista* l , Vertice* vertice){
-
+void lista_insere (Lista* l , Aresta* aresta){
 	Celula* nova = (Celula*) malloc (sizeof (Celula));
 	nova->prox = NULL;
-	nova->vertice = vertice;
+	nova->aresta = aresta;
 
 	if (lista_vazia (l)){
 		l->prim = l->ult = nova;
 	}else{
 		l->ult = l->ult->prox = nova;
 	}
-
 }
 
-Vertice* lista_retornaVertice (Lista* l, int pos){
+Aresta* lista_retornaAresta (Lista* l, int pos){
 	Celula* celAux = l->prim;
 
 	for(int i = 0; i < pos; i++){
@@ -49,46 +47,31 @@ Vertice* lista_retornaVertice (Lista* l, int pos){
 	}
 
 	if(celAux != NULL){
-		return celAux->vertice;
+		return celAux->aresta;
 	}else{
 		return NULL;
 	}
 }
 
 void lista_imprime (Lista* l){
-
 	Celula* p = l->prim;
 
 	while (p){
-		imprimeVertice(p->vertice);
+		imprimeAresta(p->aresta);
 		p = p->prox;
 	}
-
 }
 
 void lista_libera (Lista* l){
-
 	Celula* p = l->prim;
 	Celula* q;
 
 	while (p){
 		q = p->prox;
-		liberaVertice(p->vertice);
+		liberaAresta(p->aresta);
 		free (p);
 		p = q;
 	}
 	
 	free (l);
-}
-
-Celula* retornaCelulaPrim(Lista* l){
-	return l->prim;
-}
-
-Celula* retornaCelulaProx(Celula* c){
-	return c->prox;
-}
-
-Vertice* retornaVerticeDaCelula(Celula* c){
-	return c->vertice;
 }

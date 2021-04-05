@@ -1,3 +1,4 @@
+/*
 #include <stdio.h>
 #include <stdlib.h>
 #include "fila.h"
@@ -10,7 +11,7 @@ struct fila{
 Fila* fp_cria(int N){
     Fila* nova = (Fila*) malloc (sizeof(Fila));
     nova->ini = nova->fim = 0;
-    nova->vert = (Vertice**) malloc (sizeof(Vertice*) * (N+1));//+1 porque os indices comecam em 1 e nao 0
+    nova->vert = (Vertice**) malloc (sizeof(Vertice*) * (N+1)); // +1 porque os indices comecam em 1 e nao 0
     return nova;
 }
 
@@ -70,3 +71,4 @@ void fp_imprime(Fila* fp){
         printf("%d - %d - %.01lf\n", i, retornaId(vertice), retornaPeso(vertice));
     }
 }
+*/
