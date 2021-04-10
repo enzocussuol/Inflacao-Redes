@@ -44,10 +44,10 @@ const void inicializaDijkstra(Grafo* grafo, int inicio){
 }
 
 double dijkstra(Grafo* grafo, int inicio, int fim){
-    /*
     inicializaDijkstra(grafo, inicio);
 
-    double custo = 0;
+    double custo;
+    double distancia;
     int j = 0;
     
     Vertice* u;
@@ -60,16 +60,17 @@ double dijkstra(Grafo* grafo, int inicio, int fim){
         fp_insere(fp, grafo->vertices[i]);
     }
 
-    while(!fp_vazia){
+    while(!fp_vazia(fp)){
         u = fp_delMin(fp);
-        if(retornaId(u) == fim) break;
 
         aresta = lista_retornaAresta(retornaListaAdj(u), j);
         while(aresta != NULL){
             v = grafo->vertices[retornaDestino(aresta)];
-            if(retornaDistancia(v) > retornaDistancia(u) + retornaPeso(aresta)){
-                // Atualiza a distancia de v
-                // Troca ele de posicao na fila (vai ter uma prioridade maior)
+            distancia = retornaDistancia(u) + retornaPeso(aresta);
+
+            if(retornaDistancia(v) > distancia){
+                if(retornaId(v) == fim) custo = distancia;
+                fp_atualizaChave(fp, retornaId(v), distancia);
             }
 
             j++;
@@ -80,7 +81,6 @@ double dijkstra(Grafo* grafo, int inicio, int fim){
     }
 
     return custo;
-    */
 }
 
 void insereAresta(Grafo* grafo, Aresta* aresta){

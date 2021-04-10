@@ -48,8 +48,7 @@ Grafo* entrada(char* arquivo){
 int main(int argc, char* argv[]){
     Grafo* rede = entrada(argv[1]);
 
-    /*
-    Teste para o algoritmo de Dijkstra
+    // Teste para o algoritmo de Dijkstra
     int* servidores = retornaServidores(rede);
     int* clientes = retornaClientes(rede);
 
@@ -59,7 +58,6 @@ int main(int argc, char* argv[]){
             printf("Custo do cliente %d para o servidor %d: %.02lf\n", clientes[j], servidores[i], dijkstra(rede, clientes[j], servidores[i]));
         }
     }
-    */
     
     imprimeGrafo(rede);
     liberaGrafo(rede);
