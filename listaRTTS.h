@@ -7,9 +7,10 @@
 
 	ListaR* listaR_cria ();
 	void listaR_insere (ListaR*, RTT*);
+	int listaR_vazia (ListaR*);
 	/* Retorna o valor do RTT do par de nodes, se o RTT não existe retorna < 0*/
 	double listaR_busca (ListaR*, int, int);
-	void listaR_imprime (ListaR*);
+	void listaR_imprime (ListaR*, FILE*);
 	void listaR_libera (ListaR*);
 
 #endif

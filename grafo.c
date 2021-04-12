@@ -46,8 +46,8 @@ const void inicializaDijkstra(Grafo* grafo, int inicio){
 double dijkstra(Grafo* grafo, int inicio, int fim){
     inicializaDijkstra(grafo, inicio);
 
-    double custo;
-    double distancia;
+    double custo = 0;
+    double distancia = 0;
     int j = 0;
     
     Vertice* u;
@@ -79,6 +79,8 @@ double dijkstra(Grafo* grafo, int inicio, int fim){
 
         j = 0;
     }
+
+    fp_libera(fp);
 
     return custo;
 }
@@ -140,7 +142,7 @@ void imprimeGrafo(Grafo* grafo){
         }else{
             aresta = lista_retornaAresta(retornaListaAdj(vertice), j);
             while(aresta != NULL){
-                fprintf(f, "%d -> %d[label=\"%.01lf\"];\n", i, retornaDestino(aresta), retornaPeso(aresta));
+                fprintf(f, "%d -> %d[label=\"%lf\"];\n", i, retornaDestino(aresta), retornaPeso(aresta));
                 j++;
                 aresta = lista_retornaAresta(retornaListaAdj(vertice), j);
             }
@@ -158,6 +160,9 @@ void liberaGrafo(Grafo* grafo){
         liberaVertice(grafo->vertices[i]);
     }
 
+    free(grafo->clientes);
+    free(grafo->servidores);
+    free(grafo->monitores);
     free(grafo->vertices);
     free(grafo);
 }

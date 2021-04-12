@@ -54,11 +54,11 @@ double listaR_busca (ListaR* l, int id1, int id2){
 }
 
 
-void listaR_imprime (ListaR* l){
+void listaR_imprime (ListaR* l, FILE* f){
 	Cel* p = l->prim;
 
 	while (p){
-		rtt_imprime (p->par);
+		rtt_imprime (p->par, f);
 		p = p->prox;
 	}
 }

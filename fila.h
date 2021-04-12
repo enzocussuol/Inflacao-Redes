@@ -20,6 +20,6 @@
     Vertice* fp_retornaVertice(Fila*, int);
     void fix_up(Fila*,int);
     void fix_down(Fila*,int,int);
-    void fp_atualizaChave(Fila*, int, int);
+    void fp_atualizaChave(Fila*, int, double);
     void fp_imprime(Fila*);
 #endif

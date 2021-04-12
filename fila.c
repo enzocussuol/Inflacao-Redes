@@ -50,6 +50,7 @@ int fp_tam(Fila* fp){
 }
 
 void fp_libera(Fila* fp){
+    free(fp->mapa);
     free(fp->vert);
     free(fp);
 }
@@ -79,7 +80,7 @@ void fix_up(Fila* fp, int k) {
     }
 }
 
-void fp_atualizaChave(Fila* fp, int id, int distancia){
+void fp_atualizaChave(Fila* fp, int id, double distancia){
     int pos = fp->mapa[id];
     atualizaDistancia(fp->vert[pos], distancia);
     fix_up(fp, pos);

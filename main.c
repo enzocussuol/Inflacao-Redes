@@ -11,7 +11,7 @@ Grafo* entrada(char* arquivo){
     FILE* arq = fopen(arquivo,"r");
     if(!arq){
         printf("Erro ao abrir arquivo!\n");
-        exit(1);
+        exit(2);
     }
 
     int nVert,nArestas,nServ,nCli,nMonit;
@@ -44,40 +44,22 @@ Grafo* entrada(char* arquivo){
         insereAresta(rede, criaAresta(origem, destino, peso));
     }
 
+    fclose(arq);
+
     return rede;
 }
 
 int main(int argc, char* argv[]){
     Grafo* rede = entrada(argv[1]);
 
-    // Teste para o algoritmo de Dijkstra
-	int tam = retornaQtdMonitores(rede)*retornaQtdServidores(rede);
-
+	int tam = retornaQtdClientes(rede)*retornaQtdServidores(rede);
 	Saida* s = saida_cria (retornaNumVertices (rede), tam);
-	//printf ("%d\n\n", retornaNumVertices (rede));
-	//saida_preenche (s, rede);
-	//saida_ordena (s);
-	//saida_imprime (s);
+	saida_preenche (s, rede);
+	saida_ordena (s);
+	saida_imprime (s);
 
-	/*RTT* r1 = rtt_cria (1, 2, 1.3);
-	RTT* r2 = rtt_cria (1, 3, 3.5);
-	RTT* r3 = rtt_cria (1, 4, 8.1);
-	RTT* r4 = rtt_cria (1, 5, 2.9);
-
-	ListaR* l = listaR_cria();
-	listaR_insere (l , r1);
-	listaR_insere (l , r2);
-	listaR_insere (l , r3);
-	listaR_insere (l , r4);
-
-	listaR_imprime (l);
-
-	if (listaR_busca (l, 1, 5)){
-		printf ("Ok\n");
-	}*/
-
-    
-    imprimeGrafo(rede);
     liberaGrafo(rede);
+    saida_libera(s);
+
     return 0;
 }

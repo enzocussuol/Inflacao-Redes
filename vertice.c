@@ -19,7 +19,7 @@ Vertice* criaVertice(int id){
     return novoVertice;
 }
 
-void atualizaDistancia(Vertice* vertice, int distancia){
+void atualizaDistancia(Vertice* vertice, double distancia){
     vertice->distancia = distancia;
 }
 
@@ -37,7 +37,7 @@ Lista* retornaListaAdj(Vertice* vertice){
 
 void imprimeVertice(Vertice* vertice){
     printf("Vertice com id: %d, ", vertice->id);
-    printf("distancia: %.02lf, ", vertice->distancia);
+    printf("distancia: %lf, ", vertice->distancia);
     printf("lista de adjacencias desse vertice:\n");
     lista_imprime(vertice->listaAdj);
 }

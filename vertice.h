@@ -6,7 +6,7 @@
     typedef struct vertice Vertice;
 
     Vertice* criaVertice(int);
-    void atualizaDistancia(Vertice*, int);
+    void atualizaDistancia(Vertice*, double);
     int retornaId(Vertice*);
     double retornaDistancia(Vertice*);
     Lista* retornaListaAdj(Vertice*);

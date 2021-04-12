@@ -21,10 +21,10 @@ void rtt_insereNovoValor (RTT*, double);
 /* Retorna 1 se par do rtt está no rtt passado na entrada*/
 int rtt_comparaNodes (RTT*, int, int);
 
-int rtt_comparaValores (RTT*, RTT*);
+int rtt_comparaValores (RTT* const*, RTT* const*);
 
 /* Imprime o par [S,C] com o valor da inflação*/
-void rtt_imprime (RTT*);
+void rtt_imprime (RTT*, FILE*);
 
 
 void rtt_calculaInflacao (RTT*);

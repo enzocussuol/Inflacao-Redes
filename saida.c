@@ -21,7 +21,7 @@ Saida* saida_cria (int vertices, int qtdRTTS){
 	nova->rtts = (RTT**) malloc (sizeof (RTT*)*nova->qtdRTTS);
 
 	for (int i = 0; i < vertices; i++){
-		nova->valores[i] = NULL;
+		nova->valores[i] = listaR_cria();
 	}
 
 	return nova;
@@ -30,11 +30,10 @@ Saida* saida_cria (int vertices, int qtdRTTS){
 /* Procura na lista de pares de RTT se o valor já foi calculado, se não foi retorna < 0, e cria a lista*/
 double busca (Saida* s, int node1, int node2){
 	
-	if (s->valores[node1] == NULL){
-		s->valores[node1] = listaR_cria ();
-		return -1;
-	}else {
+	if (!listaR_vazia(s->valores[node1])){
 		return listaR_busca (s->valores[node1], node1, node2);
+	}else{
+		return -1;
 	}
 
 }
@@ -46,6 +45,7 @@ static void libera_auxiliar (Saida* s){
 	for (int i = 0; i < s->qtdValores; i++){
 		listaR_libera (s->valores[i]);
 	}
+	free(s->valores);
 
 }
 
@@ -58,7 +58,8 @@ void saida_preenche (Saida* saida, Grafo* rede){
 	int qtdM = retornaQtdMonitores (rede);
 	int qtdC = retornaQtdClientes (rede);
 
-	int aux, i = 0;
+	int i = 0;
+	double aux;
 	double rtt_parcial = INT_MAX;
 	double custo1, custo2;
 	RTT* rtt_aux;
@@ -67,11 +68,8 @@ void saida_preenche (Saida* saida, Grafo* rede){
 	for (int j = 0; j < qtdS; j++){//Percorrer o vetor de Servidores
 		for (int k = 0; k < qtdC; k++){// Percorrer o vetor de Clientes
 			for (int m = 0; m < qtdM; m++){//Percorrer o vetor de Monitores
-				//printf ("%d -> %d -> %d\n", S[j], M[m], C[k]);
-				
 				aux = busca (saida, S[j], M[m]);
 				if (aux >= 0){//Já foi calculado
-					//printf ("Ja foi %d -> %d\n", S[j], M[m]);
 					custo1 = aux;
 				}else{//Não foi calculado
 					custo1 = dijkstra (rede, S[j], M[m]);// Calcula
@@ -82,7 +80,6 @@ void saida_preenche (Saida* saida, Grafo* rede){
 
 				aux = busca (saida, C[k], M[m]);
 				if (aux >= 0){//Já foi calculado
-					//printf ("Ja foi %d -> %d\n", M[m], C[k]);
 					custo2 = aux;
 				}else{//Não foi calculado
 					custo2 = dijkstra (rede, M[m], C[k]);// Calcula
@@ -95,7 +92,6 @@ void saida_preenche (Saida* saida, Grafo* rede){
 				if (rtt_parcial > custo1+custo2){
 					rtt_parcial = custo1 + custo2;
 				}
-				
 			}
 
 			normal = dijkstra (rede, S[j], C[k]);
@@ -105,28 +101,41 @@ void saida_preenche (Saida* saida, Grafo* rede){
 			rtt_calculaInflacao (rtt_normal);
 			saida->rtts[i] = rtt_normal;
 			i++;
+			rtt_parcial = INT_MAX;
 		}
 	}
-	//libera_auxiliar (saida);
+
+	libera_auxiliar (saida);
 }
 
 int compara (const void* r1, const void* r2){
-	RTT* aux1 = (RTT*)r1;
-	RTT* aux2 = (RTT*)r2;
+	RTT* const* aux1 = r1;
+	RTT* const* aux2 = r2;
 	
 	return rtt_comparaValores (aux1, aux2);
 }
-
-void saida_imprime (Saida* s){
-
-	for (int i= 0; i < s->qtdRTTS; i++){
-		rtt_imprime (s->rtts[i]);
-	}
-}
-
 
 void saida_ordena (Saida* s){
 
 	qsort (s->rtts, s->qtdRTTS, sizeof(s->rtts[0]), compara);
 
+}
+
+void saida_imprime (Saida* s){
+	FILE* f = fopen("saida.txt", "w");
+
+	for (int i= 0; i < s->qtdRTTS; i++){
+		rtt_imprime (s->rtts[i], f);
+	}
+
+	fclose(f);
+}
+
+void saida_libera (Saida* s){
+	for(int i = 0; i < s->qtdRTTS; i++){
+		rtt_libera(s->rtts[i]);
+	}
+
+	free(s->rtts);
+	free(s);
 }
