@@ -4,6 +4,8 @@
 #include "lista.h"
 #include "grafo.h"
 #include "fila.h"
+#include "listaRTTS.h"
+#include "saida.h"
 
 Grafo* entrada(char* arquivo){
     FILE* arq = fopen(arquivo,"r");
@@ -49,18 +51,33 @@ int main(int argc, char* argv[]){
     Grafo* rede = entrada(argv[1]);
 
     // Teste para o algoritmo de Dijkstra
-    int* servidores = retornaServidores(rede);
-    int* clientes = retornaClientes(rede);
+	int tam = retornaQtdMonitores(rede)*retornaQtdServidores(rede);
 
-    for(int i = 0; i < retornaQtdServidores(rede); i++){
-        for(int j = 0; j < retornaQtdClientes(rede); j++){
-            printf("Custo do servidor %d para o cliente %d: %.02lf\n", servidores[i], clientes[j], dijkstra(rede, servidores[i], clientes[j]));
-            printf("Custo do cliente %d para o servidor %d: %.02lf\n", clientes[j], servidores[i], dijkstra(rede, clientes[j], servidores[i]));
-        }
-    }
+	Saida* s = saida_cria (retornaNumVertices (rede), tam);
+	//printf ("%d\n\n", retornaNumVertices (rede));
+	//saida_preenche (s, rede);
+	//saida_ordena (s);
+	//saida_imprime (s);
+
+	/*RTT* r1 = rtt_cria (1, 2, 1.3);
+	RTT* r2 = rtt_cria (1, 3, 3.5);
+	RTT* r3 = rtt_cria (1, 4, 8.1);
+	RTT* r4 = rtt_cria (1, 5, 2.9);
+
+	ListaR* l = listaR_cria();
+	listaR_insere (l , r1);
+	listaR_insere (l , r2);
+	listaR_insere (l , r3);
+	listaR_insere (l , r4);
+
+	listaR_imprime (l);
+
+	if (listaR_busca (l, 1, 5)){
+		printf ("Ok\n");
+	}*/
+
     
     imprimeGrafo(rede);
     liberaGrafo(rede);
-
     return 0;
 }
