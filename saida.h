@@ -1,17 +1,14 @@
-#ifndef _SAIDA_
-	#define _SAIDA_
-	#include "grafo.h"
-	typedef struct tSaida Saida;
+#ifndef SAIDA_H
+    #define SAIDA_H
 
-	Saida* saida_cria (int, int);
+    #include "rtt.h"
 
-	/*Preenche rtts*/
-	void saida_preenche (Saida*, Grafo*);
+    typedef struct saida Saida;
 
-	void saida_imprime (Saida*);
-
-	void saida_ordena (Saida* );
-
-	void saida_libera (Saida*);
-
+    Saida* criaSaida(int);
+    void preencheSaida(Saida*, Grafo*, Matriz*);
+    int compara(const void*, const void*);
+    void saida_ordena(Saida*);
+    void imprimeSaida(Saida*);
+    void liberaSaida(Saida*);
 #endif

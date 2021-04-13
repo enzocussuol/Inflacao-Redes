@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <limits.h>
 #include "grafo.h"
 
 struct grafo{
@@ -37,16 +36,15 @@ Grafo* criaGrafo(int numVertices, int numArestas, int servidores[], int clientes
 
 const void inicializaDijkstra(Grafo* grafo, int inicio){
     for(int i = 0; i < grafo->numVertices; i++){
-        atualizaDistancia(grafo->vertices[i], INT_MAX);
+        atualizaDistancia(grafo->vertices[i], __INT_MAX__);
     }
 
     atualizaDistancia(grafo->vertices[inicio], 0);
 }
 
-double dijkstra(Grafo* grafo, int inicio, int fim){
+void dijkstra(Grafo* grafo, int inicio){
     inicializaDijkstra(grafo, inicio);
 
-    double custo = 0;
     double distancia = 0;
     int j = 0;
     
@@ -69,7 +67,6 @@ double dijkstra(Grafo* grafo, int inicio, int fim){
             distancia = retornaDistancia(u) + retornaPeso(aresta);
 
             if(retornaDistancia(v) > distancia){
-                if(retornaId(v) == fim) custo = distancia;
                 fp_atualizaChave(fp, retornaId(v), distancia);
             }
 
@@ -81,8 +78,6 @@ double dijkstra(Grafo* grafo, int inicio, int fim){
     }
 
     fp_libera(fp);
-
-    return custo;
 }
 
 void insereAresta(Grafo* grafo, Aresta* aresta){

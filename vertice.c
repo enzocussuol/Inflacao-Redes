@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <limits.h>
 #include "vertice.h"
 
 struct vertice{
@@ -13,7 +12,7 @@ Vertice* criaVertice(int id){
     Vertice* novoVertice = (Vertice*) malloc(sizeof(Vertice));
 
     novoVertice->id = id;
-    novoVertice->distancia = INT_MAX;
+    novoVertice->distancia = __INT_MAX__;
     novoVertice->listaAdj = lista_cria();
 
     return novoVertice;

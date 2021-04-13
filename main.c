@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "vertice.h"
+#include "aresta.h"
 #include "lista.h"
-#include "grafo.h"
+#include "vertice.h"
 #include "fila.h"
-#include "listaRTTS.h"
+#include "grafo.h"
+#include "matriz.h"
+#include "rtt.h"
 #include "saida.h"
 
 Grafo* entrada(char* arquivo){
@@ -52,14 +54,18 @@ Grafo* entrada(char* arquivo){
 int main(int argc, char* argv[]){
     Grafo* rede = entrada(argv[1]);
 
-	int tam = retornaQtdClientes(rede)*retornaQtdServidores(rede);
-	Saida* s = saida_cria (retornaNumVertices (rede), tam);
-	saida_preenche (s, rede);
-	saida_ordena (s);
-	saida_imprime (s);
+    Matriz* matriz = criaMatriz(rede);
+    preencheMatriz(matriz, rede);
+
+    Saida* saida = criaSaida(retornaQtdServidores(rede)*retornaQtdClientes(rede));
+    preencheSaida(saida, rede, matriz);
+
+    saida_ordena(saida);
+    imprimeSaida(saida);
 
     liberaGrafo(rede);
-    saida_libera(s);
+    liberaMatriz(matriz);
+    liberaSaida(saida);
 
     return 0;
 }
