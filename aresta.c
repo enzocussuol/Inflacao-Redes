@@ -3,7 +3,7 @@
 #include "aresta.h"
 
 struct aresta{
-    int origem, destino;
+    int origem, destino; //Aresta com vertice inicial, final e peso
     double peso;
 };
 
@@ -27,10 +27,6 @@ int retornaDestino(Aresta* aresta){
 
 double retornaPeso(Aresta* aresta){
     return aresta->peso;
-}
-
-void imprimeAresta(Aresta* aresta){
-    printf("Origem: %d, Destino: %d, Peso: %.02lf\n", aresta->origem, aresta->destino, aresta->peso);
 }
 
 void liberaAresta(Aresta* aresta){

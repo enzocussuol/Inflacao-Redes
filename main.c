@@ -13,7 +13,7 @@ Grafo* entrada(char* arquivo){
     FILE* arq = fopen(arquivo,"r");
     if(!arq){
         printf("Erro ao abrir arquivo!\n");
-        exit(2);
+        exit(1);
     }
 
     int nVert,nArestas,nServ,nCli,nMonit;
@@ -55,14 +55,15 @@ int main(int argc, char* argv[]){
     Grafo* rede = entrada(argv[1]);
 
     Matriz* matriz = criaMatriz(rede);
-    preencheMatriz(matriz, rede);
+    preencheMatriz(matriz, rede); //Matriz com as distancias entre os vertices
 
     Saida* saida = criaSaida(retornaQtdServidores(rede)*retornaQtdClientes(rede));
     preencheSaida(saida, rede, matriz);
 
-    saida_ordena(saida);
-    imprimeSaida(saida);
+    saida_ordena(saida); //Ordenacao por inflacao(desempate por numero servidor/cliente)
+    imprimeSaida(saida,argv[2]);
 
+    //Liberacao da memoria utilizada
     liberaGrafo(rede);
     liberaMatriz(matriz);
     liberaSaida(saida);

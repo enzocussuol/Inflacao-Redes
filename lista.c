@@ -53,15 +53,6 @@ Aresta* lista_retornaAresta (Lista* l, int pos){
 	}
 }
 
-void lista_imprime (Lista* l){
-	Celula* p = l->prim;
-
-	while (p){
-		imprimeAresta(p->aresta);
-		p = p->prox;
-	}
-}
-
 void lista_libera (Lista* l){
 	Celula* p = l->prim;
 	Celula* q;

@@ -34,13 +34,6 @@ Lista* retornaListaAdj(Vertice* vertice){
     return vertice->listaAdj;
 }
 
-void imprimeVertice(Vertice* vertice){
-    printf("Vertice com id: %d, ", vertice->id);
-    printf("distancia: %lf, ", vertice->distancia);
-    printf("lista de adjacencias desse vertice:\n");
-    lista_imprime(vertice->listaAdj);
-}
-
 void liberaVertice(Vertice* vertice){
     lista_libera(vertice->listaAdj);
     free(vertice);

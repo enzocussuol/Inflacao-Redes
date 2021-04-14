@@ -10,7 +10,6 @@
     void dijkstra(Grafo*, int);
     void insereAresta(Grafo*, Aresta*);
     int retornaNumVertices(Grafo*);
-    int retornaNumArestas(Grafo*);
     int* retornaServidores(Grafo*);
     int* retornaClientes(Grafo*);
     int* retornaMonitores(Grafo*);
@@ -18,6 +17,5 @@
     int retornaQtdClientes(Grafo*);
     int retornaQtdMonitores(Grafo*);
     Vertice** retornaVertices(Grafo*);
-    void imprimeGrafo(Grafo*);
     void liberaGrafo(Grafo*);
 #endif

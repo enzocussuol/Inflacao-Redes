@@ -4,7 +4,7 @@
 
 struct fila{
     int fim;
-    int* mapa;
+    int* mapa; //mapeamento dos ids dos vertices na fila
     Vertice** vert;
 };
     
@@ -37,28 +37,14 @@ Vertice* fp_delMin(Fila* fp){
     return min;
 }
 
-Vertice* fp_min(Fila* fp){
-    return fp->vert[1];
-}
-
 int fp_vazia(Fila* fp){
     return fp->fim == 0;
-}
-
-int fp_tam(Fila* fp){
-    return fp->fim;
 }
 
 void fp_libera(Fila* fp){
     free(fp->mapa);
     free(fp->vert);
     free(fp);
-}
-
-Vertice* fp_retornaVertice(Fila* fila, int id){
-    int pos = fila->mapa[id];
-    imprimeVertice(fila->vert[pos]);
-    return fila->vert[pos];
 }
 
 void fix_down(Fila* fp, int sz, int k){
@@ -84,11 +70,4 @@ void fp_atualizaChave(Fila* fp, int id, double distancia){
     int pos = fp->mapa[id];
     atualizaDistancia(fp->vert[pos], distancia);
     fix_up(fp, pos);
-}
-
-void fp_imprime(Fila* fp){
-    for(int i = 1; i <= fp->fim ;i++){
-        Vertice* vertice = fp->vert[i];
-        printf("%d - %d - %.01lf\n", i, retornaId(vertice), retornaDistancia(vertice));
-    }
 }

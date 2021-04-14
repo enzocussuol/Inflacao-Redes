@@ -8,6 +8,5 @@
     Matriz* criaMatriz(Grafo*);
     void preencheMatriz(Matriz*, Grafo*);
     double retornaElemento(Matriz*, int, int);
-    void imprimeMatriz(Matriz*);
     void liberaMatriz(Matriz*);
 #endif

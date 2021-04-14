@@ -28,6 +28,7 @@ void preencheSaida(Saida* saida, Grafo* grafo, Matriz* matriz){
     int i = 0;
     for(int j = 0; j < qtdServidores; j++){
         for(int k = 0; k < qtdClientes; k++){
+            /*Preenche o RTT para cada par Servidor/Cliente*/
             saida->RTTs[i] = criaRTT(servidores[j], clientes[k]);
             preencheRTT(saida->RTTs[i++], matriz, monitores, qtdMonitores);
         }
@@ -35,9 +36,8 @@ void preencheSaida(Saida* saida, Grafo* grafo, Matriz* matriz){
 }
 
 int compara (const void* r1, const void* r2){
-	RTT* const* aux1 = r1;
+    RTT* const* aux1 = r1;
 	RTT* const* aux2 = r2;
-	
 	return rtt_comparaValores (aux1, aux2);
 }
 
@@ -47,8 +47,12 @@ void saida_ordena (Saida* s){
 
 }
 
-void imprimeSaida(Saida* saida){
-    FILE* f = fopen("saida.txt", "w");
+void imprimeSaida(Saida* saida, char* arq){
+    FILE* f = fopen(arq, "w");
+    if(!f){
+        printf("Nao foi possivel abrir o arquivo");
+        exit(1);
+    }
 
     for(int i = 0; i < saida->qtdRTTs; i++){
         imprimeRTT(saida->RTTs[i], f);

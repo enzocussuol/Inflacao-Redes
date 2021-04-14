@@ -43,35 +43,35 @@ const void inicializaDijkstra(Grafo* grafo, int inicio){
 }
 
 void dijkstra(Grafo* grafo, int inicio){
-    inicializaDijkstra(grafo, inicio);
+    inicializaDijkstra(grafo, inicio); //Seta distancia de todos os vertices nao iniciais como MAX_INT
 
     double distancia = 0;
     int j = 0;
     
-    Vertice* u;
-    Vertice* v;
+    Vertice* u; //Vertice sendo utilizado para calcular as distancias
+    Vertice* v; //Vertice adjacente ao vertice u
     Aresta* aresta;
 
-    Fila* fp = fp_cria(grafo->numVertices);
+    Fila* fp = fp_cria(grafo->numVertices); //cria fila de prioridade (heap binaria)
 
     for(int i = 0; i < grafo->numVertices; i++){
-        fp_insere(fp, grafo->vertices[i]);
+        fp_insere(fp, grafo->vertices[i]); //preenche a fila
     }
 
-    while(!fp_vazia(fp)){
-        u = fp_delMin(fp);
+    while(!fp_vazia(fp)){ //enquanto a fila nao esta vazia
+        u = fp_delMin(fp);//retorna vertice com menor distancia (primeiro da fila)
 
-        aresta = lista_retornaAresta(retornaListaAdj(u), j);
-        while(aresta != NULL){
-            v = grafo->vertices[retornaDestino(aresta)];
-            distancia = retornaDistancia(u) + retornaPeso(aresta);
+        aresta = lista_retornaAresta(retornaListaAdj(u), j); //Lista de arestas do vertice u
+        while(aresta != NULL){ //enquanto vertice possui arestas
+            v = grafo->vertices[retornaDestino(aresta)]; //vertice final da aresta
+            distancia = retornaDistancia(u) + retornaPeso(aresta); 
 
-            if(retornaDistancia(v) > distancia){
+            if(retornaDistancia(v) > distancia){ //Se a distancia e menor, atualiza a chave
                 fp_atualizaChave(fp, retornaId(v), distancia);
             }
 
             j++;
-            aresta = lista_retornaAresta(retornaListaAdj(u), j);
+            aresta = lista_retornaAresta(retornaListaAdj(u), j); //pega a proxima aresta da lista
         }
 
         j = 0;
@@ -86,10 +86,6 @@ void insereAresta(Grafo* grafo, Aresta* aresta){
 
 int retornaNumVertices(Grafo* grafo){
     return grafo->numVertices;
-}
-
-int retornaNumArestas(Grafo* grafo){
-    return grafo->numArestas;
 }
 
 int* retornaServidores(Grafo* grafo){
@@ -120,35 +116,6 @@ Vertice** retornaVertices(Grafo* grafo){
     return grafo->vertices;
 }
 
-void imprimeGrafo(Grafo* grafo){
-    FILE* f = fopen("grafo.dot", "w");
-
-    fprintf(f, "digraph{\n");
-
-    Vertice* vertice;
-    Aresta* aresta;
-    int j = 0;
-
-    for(int i = 0; i < grafo->numVertices; i++){
-        vertice = grafo->vertices[i];
-
-        if(lista_vazia(retornaListaAdj(vertice))){
-            fprintf(f, "%d;\n", i);
-        }else{
-            aresta = lista_retornaAresta(retornaListaAdj(vertice), j);
-            while(aresta != NULL){
-                fprintf(f, "%d -> %d[label=\"%lf\"];\n", i, retornaDestino(aresta), retornaPeso(aresta));
-                j++;
-                aresta = lista_retornaAresta(retornaListaAdj(vertice), j);
-            }
-        }
-
-        j = 0;
-    }
-
-    fprintf(f, "}\n");
-    fclose(f);
-}
 
 void liberaGrafo(Grafo* grafo){
     for(int i = 0; i < grafo->numVertices; i++){

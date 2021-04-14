@@ -10,6 +10,5 @@
     int retornaId(Vertice*);
     double retornaDistancia(Vertice*);
     Lista* retornaListaAdj(Vertice*);
-    void imprimeVertice(Vertice*);
     void liberaVertice(Vertice*);
 #endif

@@ -7,6 +7,5 @@
     int retornaOrigem(Aresta*);
     int retornaDestino(Aresta*);
     double retornaPeso(Aresta*);
-    void imprimeAresta(Aresta*);
     void liberaAresta(Aresta*);
 #endif
